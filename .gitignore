@@ -56,3 +56,8 @@ target/
 # Excel
 *.xls
 *.xslx
+
+
+# R
+output/
+*.Rout
