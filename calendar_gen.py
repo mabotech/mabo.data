@@ -37,16 +37,26 @@ def get_day2(year, month):
 
 def main(from_year, to_year):
     
+    fh = open("output/calendar_day.sql","w")
+    
     for year in range(from_year, to_year):
             
         for month in range(1, 13):
       
-            for day_info in get_day2(year, month):
-                print "%s,%d,%s" %(day_info[0], 1000*day_info[1], day_info[2]+1)
-                sql =  "insert into calendar (_date, weekday) values('%s','%s')" %(day_info[0], day_info[1])                
-                #print(sql)
+            for day_info in get_day(year, month):
+                #print "%s,%d,%s" %(day_info[0], 1000*day_info[1], day_info[2]+1)
                 
-            
+                if day_info[2] in [5,6]:
+                    restday = 1
+                else:
+                    restday = 0
+                
+                yearmonth = "%s%02d" % (year, month)
+                sql =  "insert into calendar_day (calendarday, restday,modifiedby) values('%s','%s','mabo');\n" %(day_info[0], restday)                
+                fh.write(sql)
+                
+    fh.close()
+    
 if __name__ == "__main__":
     
-    main(2014, 2015)
+    main(2015, 2016)
